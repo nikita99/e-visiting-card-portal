@@ -18,9 +18,9 @@ public class VisitingCardController {
         this.visitingCardService = visitingCardService;
     }
 
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VisitingCard> createVisitingCard(@RequestBody VisitingCard visitingCard) {
-        VisitingCard result = visitingCardService.createVisitingCard(visitingCard);
+    @PostMapping(value = "/email/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VisitingCard> createVisitingCard(@RequestBody VisitingCard visitingCard, @PathVariable("email") String email) {
+        VisitingCard result = visitingCardService.createVisitingCardForEmail(visitingCard, email);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
