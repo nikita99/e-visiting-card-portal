@@ -1,6 +1,9 @@
 package com.ndad.evcard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import javax.persistence.*;
@@ -16,15 +19,26 @@ public class VisitingCard {
     @Type(type = "uuid-char")
     @Column(name = "id")
     UUID id;
+
     @Column(name = "first_name")
     String firstName;
+
     @Column(name = "last_name")
     String lastName;
+
     @Column(name = "office")
     String office;
+
     @Column(name = "designation")
     String designation;
+
     @Column(name = "contact")
     String contact;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    @JsonIgnore
+    User user;
+
 
 }
