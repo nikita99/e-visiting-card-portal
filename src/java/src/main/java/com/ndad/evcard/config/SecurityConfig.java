@@ -1,0 +1,32 @@
+package com.ndad.evcard.config;
+
+import com.ndad.evcard.services.UserService;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+@EnableWebSecurity(debug = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserService userService;
+
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+                .and()
+                .userInfoEndpoint()
+                .oidcUserService(userService);
+
+    }
+
+}
