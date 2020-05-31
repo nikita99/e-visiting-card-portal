@@ -1,11 +1,14 @@
 package com.ndad.evcard.services;
 
 import com.ndad.evcard.entities.User;
+import com.ndad.evcard.models.UserPrincipal;
 import com.ndad.evcard.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -24,6 +27,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 new UsernameNotFoundException("No user found for email = " + email)
         );
 
-        return null;
+        return UserPrincipal.create(user);
+    }
+
+    public UserDetails loadUSerById(UUID userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("No user found for id = " + userId)
+        );
+        return UserPrincipal.create(user);
     }
 }
