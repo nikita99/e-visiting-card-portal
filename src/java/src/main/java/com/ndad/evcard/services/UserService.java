@@ -1,51 +1,50 @@
 package com.ndad.evcard.services;
 
-import com.ndad.evcard.entities.User;
+import com.ndad.evcard.repositories.RoleRepository;
 import com.ndad.evcard.repositories.UserRepository;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import com.ndad.evcard.security.JwtTokenProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 @Service
-public class UserService extends OidcUserService {
-    private final UserRepository userRepository;
+public class UserService {
 
-    public UserService(UserRepository userRepository) {
+    final
+    UserRepository userRepository;
+
+    final
+    RoleRepository roleRepository;
+
+    final
+    AuthenticationManager authenticationManager;
+
+    final
+    PasswordEncoder passwordEncoder;
+
+    final
+    JwtTokenProvider jwtTokenProvider;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @Override
-    public OidcUser loadUser(OidcUserRequest oidcUserRequest) throws OAuth2AuthenticationException {
-        OidcUser oidcUser = super.loadUser(oidcUserRequest);
-        Map attributes = oidcUser.getAttributes();
-        User user = new User();
-        user.setUsername((String) attributes.get("name"));
-        user.setEmail((String) attributes.get("email"));
-        updateUser(user);
-        return oidcUser;
-    }
 
-    public User updateUser(User userInfo) {
-        User user = getUserByEmail(userInfo.getEmail());
-        if (user == null) {
-            return createUser(userInfo);
-        }
-        user.setUsername(userInfo.getUsername());
-        user.setEmail(userInfo.getEmail());
-        return userRepository.save(user);
-    }
+    public String authenticateUser(String email, String password) throws AuthenticationException {
 
-    public User createUser(User user) {
-        user.setVisitingCards(new ArrayList<>());
-        return userRepository.save(user);
-    }
-
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenProvider.generateToken(authentication);
+        return jwt;
     }
 }
