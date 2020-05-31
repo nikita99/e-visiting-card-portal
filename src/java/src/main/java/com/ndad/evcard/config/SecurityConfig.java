@@ -1,35 +1,31 @@
 package com.ndad.evcard.config;
 
-import com.ndad.evcard.services.UserService;
+import com.ndad.evcard.security.JwtAuthenticationEntryPoint;
+import com.ndad.evcard.services.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/evcard/email/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .oauth2Login()
-                .redirectionEndpoint()
-                .baseUri("/oauth2/callback/*")
-                .and()
-                .userInfoEndpoint()
-                .oidcUserService(userService);
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
 
     }
-
 }
