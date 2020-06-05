@@ -2,6 +2,8 @@ package com.ndad.evcard.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "user")
 @Data
+@RequiredArgsConstructor
 public class User {
 
     @Id
@@ -23,12 +26,15 @@ public class User {
     UUID userId;
 
     @Column(name = "username")
+    @NonNull
     String username;
 
     @Column(name = "email")
+    @NonNull
     String email;
 
     @Column(name = "password")
+    @NonNull
     @JsonIgnore
     String password;
 

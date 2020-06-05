@@ -1,8 +1,8 @@
 package com.ndad.evcard.config;
 
+import com.ndad.evcard.security.CustomUserDetailsService;
 import com.ndad.evcard.security.JwtAuthenticationEntryPoint;
 import com.ndad.evcard.security.JwtAuthenticationFilter;
-import com.ndad.evcard.services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

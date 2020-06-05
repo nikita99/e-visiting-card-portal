@@ -1,4 +1,4 @@
-package com.ndad.evcard.services;
+package com.ndad.evcard.security;
 
 import com.ndad.evcard.entities.User;
 import com.ndad.evcard.models.UserPrincipal;
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-    public UserDetails loadUSerById(UUID userId) {
+    public UserDetails loadUserById(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UsernameNotFoundException("No user found for id = " + userId)
         );
