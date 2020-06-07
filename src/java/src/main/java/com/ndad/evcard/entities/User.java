@@ -2,6 +2,7 @@ package com.ndad.evcard.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Table(name = "user")
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -38,7 +40,7 @@ public class User {
     @JsonIgnore
     String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

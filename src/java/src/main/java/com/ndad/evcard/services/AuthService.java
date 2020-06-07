@@ -46,6 +46,7 @@ public class AuthService {
 
     public String authenticateUser(String email, String password) throws AuthenticationException {
 
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
         );
@@ -64,7 +65,7 @@ public class AuthService {
             return new ApiResponse("Email already in use.", false);
         }
 
-        User user = new User(username, email, password);
+        User user = new User(username, email, passwordEncoder.encode(password));
 
         Role role = roleRepository.getByName(RoleName.ROLE_USER).orElseThrow(() -> new Exception("User Role not set"));
         user.setRoles(Collections.singleton(role));

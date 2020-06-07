@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,9 +22,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> getUserByEmail(@RequestParam(name = "email") String email) throws JsonProcessingException {
+    @GetMapping(value = "/{email:.+}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable(name = "email") String email) throws JsonProcessingException {
         User result = userService.getUserByEmail(email);
-        return new ResponseEntity<>(ApiResponse.create(result, true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 }

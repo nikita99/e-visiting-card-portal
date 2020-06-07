@@ -6,6 +6,7 @@ import com.ndad.evcard.models.LoginRequest;
 import com.ndad.evcard.models.SignUpRequest;
 import com.ndad.evcard.services.AuthService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,14 +33,14 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    @PostMapping(name = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
-        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(new JwtAuthenticationResponse(jwt), true), HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest signUpRequest) throws Exception {
+    @PostMapping(name = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> signUp(@Valid @RequestBody SignUpRequest signUpRequest) throws Exception {
         ApiResponse response = authService.signUp(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()

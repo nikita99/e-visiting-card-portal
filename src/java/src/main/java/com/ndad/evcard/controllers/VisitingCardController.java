@@ -1,6 +1,7 @@
 package com.ndad.evcard.controllers;
 
 import com.ndad.evcard.entities.VisitingCard;
+import com.ndad.evcard.models.ApiResponse;
 import com.ndad.evcard.services.VisitingCardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,14 +20,14 @@ public class VisitingCardController {
     }
 
     @PostMapping(value = "/email/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VisitingCard> createVisitingCard(@RequestBody VisitingCard visitingCard, @PathVariable("email") String email) {
+    public ResponseEntity<ApiResponse> createVisitingCard(@RequestBody VisitingCard visitingCard, @PathVariable("email") String email) {
         VisitingCard result = visitingCardService.createVisitingCardForEmail(visitingCard, email);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VisitingCard> getVisitingCardById(@PathVariable("id") UUID uuid) {
+    public ResponseEntity<ApiResponse> getVisitingCardById(@PathVariable("id") UUID uuid) {
         VisitingCard result = visitingCardService.getVisitingCardById(uuid);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 }
