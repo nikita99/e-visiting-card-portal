@@ -21,7 +21,7 @@ public class VisitingCardService {
     }
 
     public VisitingCard createVisitingCardForEmail(VisitingCard visitingCard, String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).get();
         visitingCard.setUser(user);
         return visitingCardRespository.save(visitingCard);
     }

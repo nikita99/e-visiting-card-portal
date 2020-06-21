@@ -38,6 +38,4 @@ public class VisitingCard {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     User user;
-
-
 }
