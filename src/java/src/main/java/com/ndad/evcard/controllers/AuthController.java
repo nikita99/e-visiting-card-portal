@@ -23,23 +23,19 @@ import java.net.URI;
 public class AuthController {
 
     final
-    AuthenticationManager authenticationManager;
-
-    final
     AuthService authService;
 
-    public AuthController(AuthenticationManager authenticationManager, AuthService authService) {
-        this.authenticationManager = authenticationManager;
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
-    @PostMapping(name = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         return new ResponseEntity<>(new ApiResponse(new JwtAuthenticationResponse(jwt), true), HttpStatus.OK);
     }
 
-    @PostMapping(name = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> signUp(@Valid @RequestBody SignUpRequest signUpRequest) throws Exception {
         ApiResponse response = authService.signUp(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
