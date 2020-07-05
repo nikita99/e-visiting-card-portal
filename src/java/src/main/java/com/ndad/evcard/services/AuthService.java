@@ -1,5 +1,6 @@
 package com.ndad.evcard.services;
 
+import com.ndad.evcard.entities.Profile;
 import com.ndad.evcard.entities.Role;
 import com.ndad.evcard.entities.User;
 import com.ndad.evcard.models.ApiResponse;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @Service
@@ -66,9 +68,13 @@ public class AuthService {
         }
 
         User user = new User(username, email, passwordEncoder.encode(password));
-
         Role role = roleRepository.getByName(RoleName.ROLE_USER).orElseThrow(() -> new Exception("User Role not set"));
         user.setRoles(Collections.singleton(role));
+
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profile.setVisitingCards(new ArrayList<>());
+        user.setProfile(profile);
 
         userRepository.save(user);
 

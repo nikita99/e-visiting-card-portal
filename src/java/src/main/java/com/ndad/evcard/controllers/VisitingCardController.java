@@ -1,3 +1,4 @@
+/*
 package com.ndad.evcard.controllers;
 
 import com.ndad.evcard.entities.VisitingCard;
@@ -31,3 +32,4 @@ public class VisitingCardController {
         return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 }
+*/

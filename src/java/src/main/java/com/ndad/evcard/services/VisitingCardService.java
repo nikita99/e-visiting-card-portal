@@ -1,3 +1,4 @@
+/*
 package com.ndad.evcard.services;
 
 import com.ndad.evcard.entities.User;
@@ -30,3 +31,4 @@ public class VisitingCardService {
         return visitingCardRespository.findById(uuid).get();
     }
 }
+*/

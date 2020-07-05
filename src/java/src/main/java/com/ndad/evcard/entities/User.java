@@ -1,6 +1,7 @@
 package com.ndad.evcard.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -44,5 +45,11 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @JsonIgnore
+    Set<Role> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+
+    Profile profile;
 }

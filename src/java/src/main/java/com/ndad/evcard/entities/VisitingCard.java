@@ -35,7 +35,7 @@ public class VisitingCard {
     String contact;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "profile_id", nullable = false)
     @JsonIgnore
-    User user;
+    Profile profile;
 }
