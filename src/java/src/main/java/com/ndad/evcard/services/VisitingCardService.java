@@ -1,4 +1,3 @@
-/*
 package com.ndad.evcard.services;
 
 import com.ndad.evcard.entities.User;
@@ -21,9 +20,9 @@ public class VisitingCardService {
         this.userRepository = userRepository;
     }
 
-    public VisitingCard createVisitingCardForEmail(VisitingCard visitingCard, String email) {
-        User user = userRepository.findByEmail(email).get();
-        visitingCard.setUser(user);
+    public VisitingCard createVisitingCardForId(VisitingCard visitingCard, UUID uuid) {
+        User user = userRepository.findById(uuid).get();
+        visitingCard.setProfile(user.getProfile());
         return visitingCardRespository.save(visitingCard);
     }
 
@@ -31,4 +30,4 @@ public class VisitingCardService {
         return visitingCardRespository.findById(uuid).get();
     }
 }
-*/
+

@@ -15,7 +15,7 @@ public class Profile {
 
     @Id
     @Type(type = "uuid-char")
-    @Column(name="profile_id")
+    @Column(name = "profile_id")
     UUID id;
 
     //Todo: ignore user object
