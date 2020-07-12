@@ -41,6 +41,6 @@ public class AuthController {
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/v1/user/{email}").buildAndExpand(signUpRequest.getEmail()).toUri();
 
-        return ResponseEntity.created(location).body(response);
+        return (response.getSuccess()) ? ResponseEntity.created(location).body(response) : ResponseEntity.badRequest().body(response);
     }
 }
