@@ -9,13 +9,13 @@ const App = () => {
   const [loggedin, setLoggedin] = useState(localStorage.getItem("loggedin"));
   return (
     <div>
-      <Header isloggedin={loggedin}/>
+      <Header isloggedin={loggedin} />
       <Switch>
         <Route path="/signup">
           <SignUp />
         </Route>
         <Route path="/login">
-          <Login setLoggedin={setLoggedin}/>
+          <Login setLoggedin={setLoggedin} />
         </Route>
         <Route path="/">
           <Home />
