@@ -42,13 +42,6 @@ const Login = (props) => {
           localStorage.setItem("loggedin", true);
           props.setLoggedin(true);
           history.push("/");
-        } else {
-          setLoginState({
-            ...loginState,
-            email: "",
-            password: "",
-            loginMessage: "Please check your credentials!",
-          });
         }
       })
       .catch((err) => {
