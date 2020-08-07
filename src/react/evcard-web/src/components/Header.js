@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = (props) => {
   const isloggedin = props.isloggedin;
-  if(isloggedin){
+  if(isloggedin === true){
     return (
       <div className="header">
         <h1>e-Vcard</h1>
