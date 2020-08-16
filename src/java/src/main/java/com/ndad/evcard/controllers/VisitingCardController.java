@@ -2,6 +2,7 @@ package com.ndad.evcard.controllers;
 
 import com.ndad.evcard.entities.VisitingCard;
 import com.ndad.evcard.models.ApiResponse;
+import com.ndad.evcard.models.ShareVcardRequest;
 import com.ndad.evcard.models.UserPrincipal;
 import com.ndad.evcard.services.VisitingCardService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,12 @@ public class VisitingCardController {
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> getVisitingCardById(@PathVariable("id") UUID uuid) {
         VisitingCard result = visitingCardService.getVisitingCardById(uuid);
+        return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/share", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> shareVisitingCard(@RequestBody ShareVcardRequest shareVcardRequest) {
+        String result = visitingCardService.shareVisitingCard(shareVcardRequest.getVcardId(), shareVcardRequest.getReceiverEmail());
         return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 }

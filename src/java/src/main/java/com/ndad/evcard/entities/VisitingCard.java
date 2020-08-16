@@ -1,11 +1,14 @@
 package com.ndad.evcard.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,8 +19,8 @@ public class VisitingCard {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Type(type = "uuid-char")
-    @Column(name = "id")
-    UUID id;
+    @Column(name = "vcard_id")
+    UUID vcardId;
 
     @Column(name = "first_name")
     String firstName;
@@ -38,4 +41,8 @@ public class VisitingCard {
     @JoinColumn(name = "profile_id", nullable = false)
     @JsonIgnore
     Profile profile;
+
+    @ManyToMany(mappedBy = "receivedCards", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"receivedCards", "visitingCards"})
+    List<Profile> sharedWith = new ArrayList<>();
 }
