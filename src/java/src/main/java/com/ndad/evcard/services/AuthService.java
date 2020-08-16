@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 @Service
@@ -73,7 +72,8 @@ public class AuthService {
 
         Profile profile = new Profile();
         profile.setUser(user);
-        profile.setVisitingCards(new ArrayList<>());
+//        profile.setVisitingCards(new ArrayList<>());
+//        profile.setReceivedCards(new ArrayList<>());
         user.setProfile(profile);
 
         userRepository.save(user);
