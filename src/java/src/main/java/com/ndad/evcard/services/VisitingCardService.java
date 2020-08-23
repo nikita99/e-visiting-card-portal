@@ -8,6 +8,7 @@ import com.ndad.evcard.repositories.UserRepository;
 import com.ndad.evcard.repositories.VisitingCardRespository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -39,10 +40,11 @@ public class VisitingCardService {
 
         User user = userRepository.findByEmail(receiverEmail).get();
         Profile profile = user.getProfile();
-        visitingCard.getSharedWith().add(profile);
-        profile.getReceivedCards().add(visitingCard);
-
-        profileRepository.save(profile);
+        if(!profile.getReceivedCards().contains(visitingCard)) {
+            profile.getReceivedCards().add(visitingCard);
+            visitingCard.getSharedWith().add(profile);
+            profileRepository.save(profile);
+        }
 
         return user.getEmail();
     }

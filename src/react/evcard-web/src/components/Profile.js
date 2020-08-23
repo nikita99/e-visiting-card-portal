@@ -14,7 +14,7 @@ const Profile = (props) => {
     profileMessage: "",
   });
   useEffect(() => {
-    if (isloggedin === true) {
+    if (isloggedin === "true") {
       axios
         .get("http://localhost:8080/api/v1/profile", {
           headers: { Authorization: accessToken },

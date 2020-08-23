@@ -37,21 +37,6 @@ public class Profile {
 }
 
 
-//Profile
-//
-//Id       user
-//1        nikita
-//2        ashok
-//
-//Visiting Card
-//
-//Id firstname lastname company profile
-//1  nikita    d        MS      1
-//2  nikita    d        JP      1
-//
-//
-
-
 
 
 
