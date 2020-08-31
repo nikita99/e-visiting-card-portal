@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import CreateVcard from "./components/CreateVcard";
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(localStorage.getItem("loggedin"));
@@ -16,10 +17,13 @@ const App = () => {
           <SignUp />
         </Route>
         <Route path="/login">
-          <Login setLoggedin={setLoggedin} />
+          <Login setLoggedin={setLoggedin} isloggedin={loggedin} />
         </Route>
         <Route path="/profile">
           <Profile isloggedin={loggedin} />
+        </Route>
+        <Route path="/create">
+          <CreateVcard isloggedin={loggedin} />
         </Route>
         <Route path="/">
           <Home />
