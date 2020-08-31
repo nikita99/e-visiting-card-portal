@@ -32,7 +32,7 @@ const ShareVistingCard = (props) => {
             ...shareState,
             email: "",
           });
-          alert("VCard was shared successfully");
+          alert(response.data.message);
         }
       })
       .catch((err) => {

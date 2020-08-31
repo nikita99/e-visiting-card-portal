@@ -38,15 +38,17 @@ public class VisitingCardService {
     public String shareVisitingCard(UUID vcardId, String receiverEmail) {
         VisitingCard visitingCard = visitingCardRespository.findById(vcardId).get();
 
-        User user = userRepository.findByEmail(receiverEmail).get();
-        Profile profile = user.getProfile();
-        if(!profile.getReceivedCards().contains(visitingCard)) {
-            profile.getReceivedCards().add(visitingCard);
-            visitingCard.getSharedWith().add(profile);
-            profileRepository.save(profile);
+        User receiver = userRepository.findByEmail(receiverEmail).get();
+        Profile receiverProfile = receiver.getProfile();
+        if(!receiverProfile.getReceivedCards().contains(visitingCard)) {
+            receiverProfile.getReceivedCards().add(visitingCard);
+            visitingCard.getSharedWith().add(receiverProfile);
+            profileRepository.save(receiverProfile);
+        }else{
+            return "Already shared!";
         }
 
-        return user.getEmail();
+        return "Shared successfully!";
     }
 }
 

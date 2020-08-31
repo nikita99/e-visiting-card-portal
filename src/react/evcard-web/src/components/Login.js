@@ -39,8 +39,8 @@ const Login = (props) => {
             "access-token",
             response.data.message.accessToken
           );
-          localStorage.setItem("loggedin", true);
-          props.setLoggedin(true);
+          localStorage.setItem("loggedin", "true");
+          props.setLoggedin("true");
           history.push("/");
         }
       })
@@ -65,40 +65,46 @@ const Login = (props) => {
       });
   };
 
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={loginState.email}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={loginState.password}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <br />
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
+  if(props.isloggedin === "true"){
+    history.push("/");
+    return null;
+  }else{
+    return (
       <div>
-        <h2>{loginState.loginMessage}</h2>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <br />
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={loginState.email}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={loginState.password}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <br />
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+        <div>
+          <h2>{loginState.loginMessage}</h2>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
 };
 
 export default Login;
