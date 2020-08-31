@@ -39,8 +39,8 @@ const Login = (props) => {
             "access-token",
             response.data.message.accessToken
           );
-          localStorage.setItem("loggedin", true);
-          props.setLoggedin(true);
+          localStorage.setItem("loggedin", "true");
+          props.setLoggedin("true");
           history.push("/");
         }
       })
