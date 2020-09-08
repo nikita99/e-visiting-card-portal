@@ -1,5 +1,6 @@
 package com.ndad.evcard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.Type;
@@ -28,6 +29,7 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     List<VisitingCard> visitingCards = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany()
     @JoinTable(name = "profile_receivedcards",
             joinColumns = @JoinColumn(name = "user_user_id"),

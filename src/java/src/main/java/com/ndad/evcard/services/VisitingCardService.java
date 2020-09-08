@@ -50,5 +50,10 @@ public class VisitingCardService {
 
         return "Shared successfully!";
     }
+
+    public List<VisitingCard> getReceivedCards(UUID profileId){
+        Profile profile = profileRepository.findById(profileId).get();
+        return profile.getReceivedCards();
+    }
 }
 
