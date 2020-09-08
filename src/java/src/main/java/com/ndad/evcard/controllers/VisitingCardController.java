@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,6 +40,14 @@ public class VisitingCardController {
     @PostMapping(value = "/share", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> shareVisitingCard(@RequestBody ShareVcardRequest shareVcardRequest) {
         String result = visitingCardService.shareVisitingCard(shareVcardRequest.getVcardId(), shareVcardRequest.getReceiverEmail());
+        return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/received", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> getReceivedCards() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UUID uuid = userPrincipal.getUserId();
+        List<VisitingCard> result = visitingCardService.getReceivedCards(uuid);
         return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 }
