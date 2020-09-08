@@ -65,10 +65,10 @@ const Login = (props) => {
       });
   };
 
-  if(props.isloggedin === "true"){
+  if (props.isloggedin === "true") {
     history.push("/");
     return null;
-  }else{
+  } else {
     return (
       <div>
         <h1>Login</h1>
@@ -104,7 +104,6 @@ const Login = (props) => {
       </div>
     );
   }
-  
 };
 
 export default Login;

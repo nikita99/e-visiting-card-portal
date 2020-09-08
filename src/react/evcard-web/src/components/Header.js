@@ -10,6 +10,10 @@ const Header = (props) => {
         <NavLink to="/profile">
           <button className="profile">Profile</button>
         </NavLink>
+        <br />
+        <NavLink to="/create">
+          <button className="create">Create Card</button>
+        </NavLink>
         <hr />
       </div>
     );
