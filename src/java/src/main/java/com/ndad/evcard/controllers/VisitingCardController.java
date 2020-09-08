@@ -43,8 +43,8 @@ public class VisitingCardController {
         return new ResponseEntity<>(new ApiResponse(result, true), HttpStatus.OK);
     }
 
-    @GetMapping(value="/received", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> getReceivedCards(){
+    @GetMapping(value = "/received", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> getReceivedCards() {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UUID uuid = userPrincipal.getUserId();
         List<VisitingCard> result = visitingCardService.getReceivedCards(uuid);

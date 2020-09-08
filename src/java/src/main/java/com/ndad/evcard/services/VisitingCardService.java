@@ -40,18 +40,18 @@ public class VisitingCardService {
 
         User receiver = userRepository.findByEmail(receiverEmail).get();
         Profile receiverProfile = receiver.getProfile();
-        if(!receiverProfile.getReceivedCards().contains(visitingCard)) {
+        if (!receiverProfile.getReceivedCards().contains(visitingCard)) {
             receiverProfile.getReceivedCards().add(visitingCard);
             visitingCard.getSharedWith().add(receiverProfile);
             profileRepository.save(receiverProfile);
-        }else{
+        } else {
             return "Already shared!";
         }
 
         return "Shared successfully!";
     }
 
-    public List<VisitingCard> getReceivedCards(UUID profileId){
+    public List<VisitingCard> getReceivedCards(UUID profileId) {
         Profile profile = profileRepository.findById(profileId).get();
         return profile.getReceivedCards();
     }

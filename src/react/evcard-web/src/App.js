@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import CreateVcard from "./components/CreateVcard";
+import ReceivedCards from "./components/ReceivedCards";
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(localStorage.getItem("loggedin"));
@@ -24,6 +25,9 @@ const App = () => {
         </Route>
         <Route path="/create">
           <CreateVcard isloggedin={loggedin} />
+        </Route>
+        <Route path="/received">
+          <ReceivedCards isloggedin={loggedin} />
         </Route>
         <Route path="/">
           <Home />
