@@ -10,6 +10,7 @@ const Profile = (props) => {
   const accessToken = "Bearer " + localStorage.getItem("access-token");
   const [profileState, setProfileState] = useState({
     username: "",
+    email: "",
     visitingCards: [],
     profileMessage: "",
   });
@@ -25,6 +26,7 @@ const Profile = (props) => {
             setProfileState({
               ...profileState,
               username: response.data.message.user.username,
+              email: response.data.message.user.email,
               visitingCards: response.data.message.visitingCards,
               profileMessage: "Welcome!",
             });
@@ -64,7 +66,10 @@ const Profile = (props) => {
         {profileState.visitingCards.map((visitingCard, index) => (
           <li key={index}>
             <VisitingCard visitingCard={visitingCard} />
-            <ShareVisitingCard visitingCard={visitingCard} />
+            <ShareVisitingCard
+              visitingCard={visitingCard}
+              fromEmail={profileState.email}
+            />
           </li>
         ))}
       </ul>

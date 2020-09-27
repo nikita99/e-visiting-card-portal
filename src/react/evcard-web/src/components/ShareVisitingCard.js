@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
+import { connect } from "react-redux";
+import { createNotification } from "../store/actions/notificationActions";
 
 const ShareVistingCard = (props) => {
   const accessToken = "Bearer " + localStorage.getItem("access-token");
@@ -33,6 +35,12 @@ const ShareVistingCard = (props) => {
             email: "",
           });
           alert(response.data.message);
+          const notification = {
+            toEmail: shareState.email,
+            fromEmail: props.fromEmail,
+            message: "has shared a card.",
+          };
+          props.createNotification(notification);
         }
       })
       .catch((err) => {
@@ -63,4 +71,11 @@ const ShareVistingCard = (props) => {
   );
 };
 
-export default ShareVistingCard;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createNotification: (notification) =>
+      dispatch(createNotification(notification)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ShareVistingCard);
