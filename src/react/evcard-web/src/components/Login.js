@@ -29,6 +29,7 @@ const Login = (props) => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
+          localStorage.setItem("useremail", loginState.email);
           setLoginState({
             ...loginState,
             email: "",

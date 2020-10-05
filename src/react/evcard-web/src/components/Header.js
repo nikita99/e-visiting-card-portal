@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Notifications from "./Notifications";
 
 const Header = (props) => {
   const isloggedin = props.isloggedin;
@@ -18,6 +19,8 @@ const Header = (props) => {
         <NavLink to="/received">
           <button className="received">My Received Cards</button>
         </NavLink>
+        <br />
+        <Notifications />
         <hr />
       </div>
     );
